@@ -5,22 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UNO Web</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <div id="welcome-screen">
-      <h1>UNO Web Edition</h1>
-      <button onclick="startGame()">Iniciar Partida</button>
+    <div class="welcome-screen">
+      <img src="Assets/UNO_Logo.svg.png" alt="UNO Logo" class="uno-logo" />
+      <h1>Web Edition</h1>
+      <button onclick="startGame()" class="start-button">JUGAR</button>
+      <button onclick="showInstructions()" class="instructions-button">
+        REGLAS
+      </button>
     </div>
     <div id="game-container" class="hidden">
       <div id="discard-pile"></div>
       <div id="deck"></div>
       <div id="players-area">
-        <div id="player 1"></div>
-        <div id="player 2"></div>
+        <div id="player-1"></div>
+        <div id="player-2"></div>
       </div>
       <button id="uno-button">¡UNO!</button>
     </div>
-
-    <script src="script.js"></script>
+    <footer class="footer">
+      © 2025 UNO Web. Todos los derechos reservados a Patricia Docasar, Laura
+      Martinez y Violeta Semprum.
+    </footer>
   </body>
 </html>
