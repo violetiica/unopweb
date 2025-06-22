@@ -54,7 +54,7 @@ h1{
   margin-bottom: 24px;;
 }
 
-.instructions-button {
+.rules-button {
   background: linear-gradient(90deg, #c92020 0%, #deab06 100%);
   color: #fff;
   font-size: 1.3rem;
@@ -68,13 +68,13 @@ h1{
   letter-spacing: 1px;
   transition: transform 0.15s, box-shadow 0.15s, background 0.3s;
   align-items: center;
-  font-size: 2rem;         /* Texto más grande */
-  padding: 24px 64px;      /* Más espacio interno */
-  min-width: 300px;        /* Ancho mínimo mayor */
+  font-size: 2rem;         
+  padding: 24px 64px;      
+  min-width: 300px;        
   border-radius: 40px;  
 }
 
-.start-button:hover, .instructions-button:hover {
+.start-button:hover, .rules-button:hover {
   transform: translateY(-3px) scale(1.04);
   box-shadow: 0 8px 24px rgba(0,0,0,0.18);
   background: linear-gradient(90deg, #deab06 0%, #c92020 100%);
@@ -92,4 +92,53 @@ h1{
   font-size: 1rem;
   letter-spacing: 1px;
   z-index: 100;
+}
+
+.modal{
+    display: none;
+    position: fixed;
+    z-index: 200;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+  color: #c92020;
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+  font-family: "Cinzel", sans-serif;
+  text-align: center;
+}
+
+.modal-content {
+  background: #fff;
+  margin: 10% auto;
+  padding: 60px 50px;
+  border-radius: 16px;
+  width: 150%;
+  max-width: 1500px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  position: relative;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 2rem;
+  color: #c92020;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.modal-content p, 
+.modal-content div, 
+.modal-content {
+  text-align: justify;
 }
