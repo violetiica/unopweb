@@ -118,8 +118,3 @@ h1 {
   vertical-align: middle;
   cursor: pointer;
 }
-
-.card-img:hover {
-  transform: scale(1.1);
-  transition: transform 0.2s ease-in-out;
-}
