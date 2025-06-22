@@ -9,6 +9,8 @@ let players = [];
 let currentPlayerIndex = 0;
 let direction = 1; // 1 para sentido horario, -1 para antihorario
 
+let playersArea = document.getElementById("players-area");
+
 //cards
 const card = {
   id: "r-5",
@@ -90,7 +92,6 @@ function initializeDeck() {
   shuffleDeck();
 }
 
-//mezclar mazo
 function shuffleDeck() {
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -100,6 +101,9 @@ function shuffleDeck() {
 
 function createPlayers(num) {
   for (let i = 0; i < num; i++) {
+    playersArea.innerHTML += `<div id="player${
+      i + 1
+    }" class="player"><h3>Jugador ${i + 1}</h3></div>`;
     players.push({
       id: `player${i + 1}`,
       name: `Jugador ${i + 1}`,
