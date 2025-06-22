@@ -170,3 +170,6 @@ window.onclick = function(event) {
   }
 }
 
+function PlayAudio() {
+  document.getElementById("audio-bg").play();
+}

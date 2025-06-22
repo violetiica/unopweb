@@ -10,7 +10,7 @@
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body onclick="PlayAudio()">
 
     <div id="welcome-screen">
       <img src="Assets/UNO_Logo.svg.png" alt="UNO Logo" class="uno-logo">
@@ -77,6 +77,8 @@
     </div>
 
     <div id="game-container" class="hidden">
+      <img src="Assets/UNO_Logo.svg.png" alt="UNO Logo" class="uno-logo-juego">
+      <img src="Assets/volver.png" alt="Volver al inicio" class="volver-button" onclick="location.reload()">
       <div id="discard-pile"></div>
       <div id="deck"></div>
       <div id="players-area">
@@ -89,6 +91,10 @@
   <footer class="footer">
   © 2025 UNO Web. Todos los derechos reservados a Patricia Docasar, Laura Martinez y Violeta Semprum.
   </footer>
+
+  <audio id="audio-bg" controls loop autoplay hidden>
+    <source src="Assets/Sounds/game-bg-music.mp3" type="audio/mpeg">
+  </audio>
 
     <script src="script.js"></script>
 
