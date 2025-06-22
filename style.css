@@ -1,36 +1,52 @@
-body, html {
+body,
+html {
   height: 100%;
   margin: 0;
   padding: 0;
 }
 
-.welcome-screen {
-    background-image: url('Assets/Fondo.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    min-height: 100vh; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.hidden {
+  display: none;
 }
 
-h1{
-    color:blanchedalmond;
-    font-size: 110px;
-    text-align: center;
-    margin-top: 50px;
-    font-family: "Cinzel", sans-serif;
-    text-shadow: 2px 4px 8px rgba(0,0,0,0.4);
+#welcome-screen {
+  background-image: url("Assets/Fondo.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#game-container {
+  background-image: url("Assets/FondoJuego.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: blanchedalmond;
+  font-size: 110px;
+  text-align: center;
+  margin-top: 50px;
+  font-family: "Cinzel", sans-serif;
+  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .uno-logo {
-  display: block;        
-  margin: 0 auto 40px;   
-  width: 340px;          
-  max-width: 80vw;       
-  height: auto;  
-  margin-top: 30px; 
+  display: block;
+  margin: 0 auto 40px;
+  width: 340px;
+  max-width: 80vw;
+  height: auto;
+  margin-top: 30px;
 }
 
 .start-button {
@@ -41,17 +57,17 @@ h1{
   padding: 16px 48px;
   border: none;
   border-radius: 30px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   margin-top: 20px;
   letter-spacing: 1px;
   transition: transform 0.15s, box-shadow 0.15s, background 0.3s;
   align-items: center;
-  font-size: 2rem;         
-  padding: 24px 64px;      
-  min-width: 300px;        
-  border-radius: 40px;  
-  margin-bottom: 24px;;
+  font-size: 2rem;
+  padding: 24px 64px;
+  min-width: 300px;
+  border-radius: 40px;
+  margin-bottom: 24px;
 }
 
 .rules-button {
@@ -62,7 +78,7 @@ h1{
   padding: 16px 48px;
   border: none;
   border-radius: 30px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   margin-top: 20px;
   letter-spacing: 1px;
@@ -76,13 +92,13 @@ h1{
 
 .start-button:hover, .rules-button:hover {
   transform: translateY(-3px) scale(1.04);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
   background: linear-gradient(90deg, #deab06 0%, #c92020 100%);
 }
 
 .footer {
   width: 100%;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   color: #fff;
   text-align: center;
   padding: 16px 0;
