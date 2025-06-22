@@ -162,7 +162,7 @@ function closeModal() {
   document.getElementById('modal-reglas').style.display = 'none';
 }
 
-// Opcional: cerrar el modal al hacer clic fuera del contenido
+// cerrar el modal al hacer clic fuera del contenido
 window.onclick = function(event) {
   var modal = document.getElementById('modal-reglas');
   if (event.target === modal) {

@@ -90,8 +90,30 @@ h1 {
   border-radius: 40px;
 }
 
+.uno-button {
+  background: linear-gradient(90deg, #c92020 0%, #deab06 100%);
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding: 16px 48px;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  margin-top: 20px;
+  letter-spacing: 1px;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.3s;
+  align-items: center;
+  font-size: 2rem;
+  padding: 24px 64px;
+  min-width: 300px;
+  border-radius: 40px;
+  margin-top: 24px;
+}
+
 .start-button:hover,
-.rules-button:hover {
+.rules-button:hover,
+.uno-button:hover{
   transform: translateY(-3px) scale(1.04);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
   background: linear-gradient(90deg, #deab06 0%, #c92020 100%);
