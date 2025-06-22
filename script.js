@@ -10,6 +10,8 @@ let currentPlayerIndex = 0;
 let direction = 1; // 1 para sentido horario, -1 para antihorario
 
 let playersArea = document.getElementById("players-area");
+let gameContainer = document.getElementById("game-container");
+let welcomeScreen = document.getElementById("welcome-screen");
 
 //cards
 const card = {
@@ -42,10 +44,12 @@ const game = {
 };
 
 function startGame() {
+  welcomeScreen.classList.add("hidden");
+  gameContainer.classList.remove("hidden");
   initializeDeck();
-  dealCards();
   createPlayers(2);
   dealCards();
+  showCards();
 }
 
 function initializeDeck() {
@@ -60,11 +64,11 @@ function initializeDeck() {
     }
     for (let card of specialCards) {
       let n = 1;
-      if (card !== "changeColor" || card !== "draw4") {
+      if (card !== "changeColor" && card !== "draw4") {
         while (n <= 2) {
           deck.push({
             id: `${color[0]}-${card}`,
-            color,
+            color: color,
             type: "special",
             value: card,
           });
@@ -79,7 +83,7 @@ function initializeDeck() {
       while (n <= 4) {
         deck.push({
           id: card,
-          color,
+          color: null,
           type: "special",
           value: card,
         });
@@ -100,6 +104,8 @@ function shuffleDeck() {
 }
 
 function createPlayers(num) {
+  playersArea.innerHTML = "";
+  players = [];
   for (let i = 0; i < num; i++) {
     playersArea.innerHTML += `<div id="player${
       i + 1
@@ -118,12 +124,22 @@ function createPlayers(num) {
 function dealCards() {
   const cardsPerPlayer = 7;
   for (let i = 0; i < players.length; i++) {
-    players.players[i].cards = deck.slice(
-      i * cardsPerPlayer,
-      (i + 1) * cardsPerPlayer
-    );
+    players[i].cards = deck.slice(i * cardsPerPlayer, (i + 1) * cardsPerPlayer);
   }
   deck = deck.slice(players.length * cardsPerPlayer);
+}
+
+function showCards() {
+  for (let player of players) {
+    const playerDiv = document.getElementById(`${player.id}`);
+    playerDiv.innerHTML = `<h3>${player.name}</h3>`;
+    player.cards.forEach((card) => {
+      const img = document.createElement("img");
+      img.src = `Assets/${card.id}.png`;
+      img.className = "card-img";
+      playerDiv.appendChild(img);
+    });
+  }
 }
 
 function playCard() {}
