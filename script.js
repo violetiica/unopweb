@@ -1,8 +1,6 @@
 //Variables globales
 let deck = [];
 let discardPile = [];
-let cardsPlayer1 = [];
-let cardsPlayer2 = [];
 const colors = ["red", "green", "blue", "yellow"];
 const specialCards = ["jump", "reverse", "draw2", "draw4", "changeColor"];
 
