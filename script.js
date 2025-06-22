@@ -135,9 +135,9 @@ function showCards() {
     playerDiv.innerHTML = `<h3>${player.name}</h3>`;
     player.cards.forEach((card) => {
       const img = document.createElement("img");
-      img.src = `Assets/${card.id}.png`;
+      player.id !== "player1" ? img.src = `Assets/backcard.png` : img.src = `Assets/${card.id}.png`;
       img.className = "card-img";
-      playerDiv.appendChild(img);
+      playerDiv.appendChild(img);      
     });
   }
 }
