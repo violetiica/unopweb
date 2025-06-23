@@ -109,10 +109,9 @@ function shuffleDeck() {
 function createPlayers(num) {
   playersArea.innerHTML = "";
   players = [];
+  let html = "";
   for (let i = 0; i < num; i++) {
-    playersArea.innerHTML += `<div id="player${
-      i + 1
-    }" class="player"><h3>Jugador ${i + 1}</h3></div>`;
+    html += `<div id="player${i + 1}" class="player"><h3>Jugador ${i + 1}</h3></div>`;
     players.push({
       id: `player${i + 1}`,
       name: `Jugador ${i + 1}`,
@@ -122,6 +121,12 @@ function createPlayers(num) {
       isHuman: true,
     });
   }
+  html += 
+  `<div id="center-area">
+    <div id="discard-pile"></div>
+    <div id="deck"></div>
+  </div>`;
+  playersArea.innerHTML = html;
 }
 
 function dealCards() {
@@ -133,6 +138,8 @@ function dealCards() {
 }
 
 function showCards() {
+  let deckArea = document.getElementById("deck");
+  let discardPileArea = document.getElementById("discard-pile");
   for (let player of players) {
     const playerDiv = document.getElementById(`${player.id}`);
     playerDiv.innerHTML = `<h3>${player.name}</h3>`;
@@ -145,6 +152,8 @@ function showCards() {
       playerDiv.appendChild(img);
     });
   }
+  deckArea.innerHTML = "";
+  discardPileArea.innerHTML = "";
   for (let card of deck) {
     deckArea.innerHTML += `<img src="Assets/backcard.png" class="card-img deck-card">`;
   }
