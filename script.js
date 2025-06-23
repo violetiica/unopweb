@@ -11,6 +11,8 @@ let direction = 1; // 1 para sentido horario, -1 para antihorario
 
 let playersArea = document.getElementById("players-area");
 let gameContainer = document.getElementById("game-container");
+let deckArea = document.getElementById("deck");
+let discardPileArea = document.getElementById("discard-pile");
 let welcomeScreen = document.getElementById("welcome-screen");
 
 //cards
@@ -94,6 +96,7 @@ function initializeDeck() {
     }
   }
   shuffleDeck();
+  discardPile.push(deck.pop());
 }
 
 function shuffleDeck() {
@@ -135,10 +138,21 @@ function showCards() {
     playerDiv.innerHTML = `<h3>${player.name}</h3>`;
     player.cards.forEach((card) => {
       const img = document.createElement("img");
-      player.id !== "player1" ? img.src = `Assets/backcard.png` : img.src = `Assets/${card.id}.png`;
+      player.id !== "player1"
+        ? (img.src = `Assets/backcard.png`)
+        : (img.src = `Assets/${card.id}.png`);
       img.className = "card-img";
-      playerDiv.appendChild(img);      
+      playerDiv.appendChild(img);
     });
+  }
+  for (let card of deck) {
+    deckArea.innerHTML += `<img src="Assets/backcard.png" class="card-img deck-card">`;
+  }
+  for (let card of discardPile) {
+    const img = document.createElement("img");
+    img.src = `Assets/${card.id}.png`;
+    img.className = "card-img discard-card";
+    discardPileArea.appendChild(img);
   }
 }
 
@@ -155,20 +169,20 @@ function countPoints() {}
 function resetRound() {}
 
 function openModal() {
-  document.getElementById('modal-reglas').style.display = 'block';
+  document.getElementById("modal-reglas").style.display = "block";
 }
 
 function closeModal() {
-  document.getElementById('modal-reglas').style.display = 'none';
+  document.getElementById("modal-reglas").style.display = "none";
 }
 
 // cerrar el modal al hacer clic fuera del contenido
-window.onclick = function(event) {
-  var modal = document.getElementById('modal-reglas');
+window.onclick = function (event) {
+  var modal = document.getElementById("modal-reglas");
   if (event.target === modal) {
     closeModal();
   }
-}
+};
 
 function PlayAudio() {
   document.getElementById("audio-bg").play();

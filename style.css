@@ -109,12 +109,12 @@ h1 {
   min-width: 300px;
   border-radius: 40px;
   margin-top: -45px;
-  margin-left: 1000px;;
+  margin-left: 1000px;
 }
 
 .start-button:hover,
 .rules-button:hover,
-.uno-button:hover{
+.uno-button:hover {
   transform: translateY(-3px) scale(1.04);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
   background: linear-gradient(90deg, #deab06 0%, #c92020 100%);
@@ -190,7 +190,8 @@ h2 {
   vertical-align: middle;
 }
 
-.card-img:hover {
+#player1 .card-img:hover {
+  cursor: pointer;
   transform: scale(1.1);
   transition: transform 0.2s;
 }
@@ -202,13 +203,33 @@ h2 {
   margin-top: 20px;
 }
 
-.volver-button{
+.volver-button {
   width: 80px;
-  margin-left: 1600px;;
-  margin-top: -140px;;
+  margin-left: 1600px;
+  margin-top: -140px;
 }
 
 .volver-button:hover {
   transform: translateY(-3px) scale(1.04);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+#deck,
+#discard-pile {
+  position: relative;
+  width: 80px;
+  height: 120px;
+  margin: 20px;
+}
+
+.deck-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  cursor: pointer;
+}
+
+.deck-card:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s;
 }
