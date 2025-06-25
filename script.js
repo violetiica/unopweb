@@ -193,6 +193,7 @@ window.onclick = function (event) {
   }
 };
 
+//MUSICA
 function PlayAudio() {
   document.getElementById("audio-bg").play();
 }
