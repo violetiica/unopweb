@@ -63,6 +63,24 @@ function startGame() {
   game.roundWinner = null;
 }
 
+function startGame() {
+  welcomeScreen.classList.add("hidden");
+  gameContainer.classList.remove("hidden");
+  initializeDeck();
+  createPlayers(2);
+  dealCards();
+  showCards();
+  game.players = players;
+  game.deck = deck;
+  game.discardPile = discardPile;
+  currentPlayerIndex = 0;
+  game.turn = currentPlayerIndex;
+  game.direction = 1;
+  game.currentCard = discardPile[discardPile.length - 1];
+  game.waitingForColor = false;
+  game.roundWinner = null;
+}
+
 function initializeDeck() {
   for (let color of colors) {
     deck.push({ id: `${color[0]}-${0}`, color, type: "number", value: 0 });
@@ -165,9 +183,6 @@ function showCards() {
     playerDiv.innerHTML = `<h3>${player.name}</h3>`;
     player.cards.forEach((card) => {
       const img = document.createElement("img");
-      // player.id !== "player1"
-      //   ? (img.src = `Assets/backcard.png`)
-      //   : (img.src = `Assets/${card.id}.png`);
       if (player.id !== "player1") {
         img.src = `Assets/backcard.png`;
       } else {
@@ -183,25 +198,16 @@ function showCards() {
   }
   deckArea.innerHTML = "";
   discardPileArea.innerHTML = "";
-  // for (let card of deck) {
-  //   deckArea.innerHTML += `<img src="Assets/backcard.png" class="card-img deck-card">`;
-  // }
   if (deck.length > 0) {
     const deckImg = document.createElement("img");
     deckImg.src = "Assets/backcard.png";
     deckImg.className = "card-img deck-card";
     // Evento click solo si es el turno del jugador 1
     if (players[currentPlayerIndex].id === "player1") {
-      deckImg.onclick = () => drawCard(0); // 0 es el índice de player1
+      deckImg.onclick = () => drawCard(0);
     }
     deckArea.appendChild(deckImg);
   }
-  // for (let card of discardPile) {
-  //   const img = document.createElement("img");
-  //   img.src = `Assets/${card.id}.png`;
-  //   img.className = "card-img discard-card";
-  //   discardPileArea.appendChild(img);
-  // }
   discardPileArea.innerHTML = "";
   if (discardPile.length > 0) {
     const topCard = discardPile[discardPile.length - 1];
@@ -231,18 +237,15 @@ function playCard(playerIndex, card) {
     currentPlayer.cards.splice(cardIndex, 1);
     game.currentCard = card;
 
-    // efectos de cartas especiales
+    //efectos de cartas especiales ---
     if (card.type === "special") {
       if (card.value === "reverse") {
         direction *= -1;
-        if (players.length === 2) {
-          nextTurn(rue);
-          return;
-        }
       }
       if (card.value === "jump") {
-        nextTurn(true);
-        return;
+        currentPlayerIndex += direction;
+        if (currentPlayerIndex >= players.length) currentPlayerIndex = 0;
+        if (currentPlayerIndex < 0) currentPlayerIndex = players.length - 1;
       }
       if (card.value === "draw2") {
         let nextIndex = currentPlayerIndex + direction;
@@ -251,82 +254,10 @@ function playCard(playerIndex, card) {
         drawCard(nextIndex);
         drawCard(nextIndex);
       }
-      // Para draw4 y changeColor
+      // Para draw4 y changeColor, deberías pedir color y/o hacer robar 4
     }
     nextTurn();
   } else {
     alert("No puedes jugar esa carta!");
   }
-}
-
-function botTurn(botIndex) {
-  const bot = players[botIndex];
-  const topCard = discardPile[discardPile.length - 1];
-  let played = false;
-  for (let card of bot.cards) {
-    if (
-      card.color === topCard.color ||
-      card.value === topCard.value ||
-      (card.type === "special" &&
-        (card.value === "changeColor" || card.value === "draw4"))
-    ) {
-      playCard(botIndex, card);
-      played = true;
-      break;
-    }
-  }
-  if (played === false) {
-    drawCard(botIndex);
-  }
-}
-
-function drawCard(playerIndex) {
-  const card = deck.shift();
-  players[playerIndex].cards.push(card);
-  showCards();
-  if (validCard(card, discardPile[discardPile.length - 1])) {
-    setTimeout(() => playCard(playerIndex, card), 700);
-  } else {
-    setTimeout(() => nextTurn(), 700);
-  }
-}
-
-function nextTurn(skipAdvance = false) {
-  if (!skipAdvance) {
-    currentPlayerIndex += direction;
-    if (currentPlayerIndex >= players.length) currentPlayerIndex = 0;
-    if (currentPlayerIndex < 0) currentPlayerIndex = players.length - 1;
-  }
-  game.turn = currentPlayerIndex;
-  showCards();
-  if (!players[currentPlayerIndex].isHuman) {
-    setTimeout(() => botTurn(currentPlayerIndex), 700);
-  }
-}
-
-function checkUNO() {}
-
-function countPoints() {}
-
-function resetRound() {}
-
-function openModal() {
-  document.getElementById("modal-reglas").style.display = "block";
-}
-
-function closeModal() {
-  document.getElementById("modal-reglas").style.display = "none";
-}
-
-// cerrar el modal al hacer clic fuera del contenido
-window.onclick = function (event) {
-  var modal = document.getElementById("modal-reglas");
-  if (event.target === modal) {
-    closeModal();
-  }
-};
-
-//MUSICA
-function PlayAudio() {
-  document.getElementById("audio-bg").play();
 }
