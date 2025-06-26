@@ -152,9 +152,10 @@ function createPlayers(num) {
 function dealCards() {
   const cardsPerPlayer = 7;
   for (let i = 0; i < players.length; i++) {
-    players[i].cards = deck.slice(i * cardsPerPlayer, (i + 1) * cardsPerPlayer);
+    for (let j = 0; j < cardsPerPlayer; j++) {
+      players[i].cards.push(deck.shift());
+    }
   }
-  deck = deck.slice(players.length * cardsPerPlayer);
 }
 
 function showCards() {
