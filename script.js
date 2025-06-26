@@ -236,7 +236,7 @@ function playCard(playerIndex, card) {
       if (card.value === "reverse") {
         direction *= -1;
         if (players.length === 2) {
-          nextTurn(rue);
+          nextTurn(true);
           return;
         }
       }
@@ -248,8 +248,11 @@ function playCard(playerIndex, card) {
         let nextIndex = currentPlayerIndex + direction;
         if (nextIndex >= players.length) nextIndex = 0;
         if (nextIndex < 0) nextIndex = players.length - 1;
-        drawCard(nextIndex);
-        drawCard(nextIndex);
+        forceDraw(nextIndex, 2);
+        if (players.length === 2) {
+          nextTurn(true);
+          return;
+        }
       }
       // Para draw4 y changeColor
     }
@@ -278,6 +281,15 @@ function botTurn(botIndex) {
   if (played === false) {
     drawCard(botIndex);
   }
+}
+
+function forceDraw(playerIndex, n) {
+  for (let i = 0; i < n; i++) {
+    if (deck.length === 0) break;
+    const card = deck.shift();
+    players[playerIndex].cards.push(card);
+  }
+  showCards();
 }
 
 function drawCard(playerIndex) {
