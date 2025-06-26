@@ -165,9 +165,6 @@ function showCards() {
     playerDiv.innerHTML = `<h3>${player.name}</h3>`;
     player.cards.forEach((card) => {
       const img = document.createElement("img");
-      // player.id !== "player1"
-      //   ? (img.src = `Assets/backcard.png`)
-      //   : (img.src = `Assets/${card.id}.png`);
       if (player.id !== "player1") {
         img.src = `Assets/backcard.png`;
       } else {
@@ -183,25 +180,17 @@ function showCards() {
   }
   deckArea.innerHTML = "";
   discardPileArea.innerHTML = "";
-  // for (let card of deck) {
-  //   deckArea.innerHTML += `<img src="Assets/backcard.png" class="card-img deck-card">`;
-  // }
   if (deck.length > 0) {
     const deckImg = document.createElement("img");
     deckImg.src = "Assets/backcard.png";
     deckImg.className = "card-img deck-card";
-    // Evento click solo si es el turno del jugador 1
+
     if (players[currentPlayerIndex].id === "player1") {
-      deckImg.onclick = () => drawCard(0); // 0 es el índice de player1
+      deckImg.onclick = () => drawCard(0);
     }
     deckArea.appendChild(deckImg);
   }
-  // for (let card of discardPile) {
-  //   const img = document.createElement("img");
-  //   img.src = `Assets/${card.id}.png`;
-  //   img.className = "card-img discard-card";
-  //   discardPileArea.appendChild(img);
-  // }
+
   discardPileArea.innerHTML = "";
   if (discardPile.length > 0) {
     const topCard = discardPile[discardPile.length - 1];
@@ -235,14 +224,20 @@ function playCard(playerIndex, card) {
     if (card.type === "special") {
       if (card.value === "reverse") {
         direction *= -1;
+        game.direction = direction;
         if (players.length === 2) {
           nextTurn(true);
           return;
         }
       }
       if (card.value === "jump") {
-        nextTurn(true);
-        return;
+        if (players.length === 2) {
+          nextTurn(true);
+          return;
+        } else {
+          nextTurn();
+          return;
+        }
       }
       if (card.value === "draw2") {
         let nextIndex = currentPlayerIndex + direction;
