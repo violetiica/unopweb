@@ -187,18 +187,29 @@ h2 {
 }
 
 #players-area {
+  margin:auto 80px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  gap: 8px;
-  padding: 15px;
+  gap: 30px;
+  padding:15px;
   justify-content: center;
   align-items: center;
 }
 
 #player1 {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: span 2 / span 2;
+    grid-row-start: 3;
+    grid-column-start: 2;
+    
+  /*
   grid-column-start: 2;
+  grid-column: span 2/span 2;
   grid-row-start: 3;
+  justify-content: center;*/
 }
 
 #player1 .card-img:hover {
@@ -207,8 +218,39 @@ h2 {
   transition: transform 0.2s;
 }
 
-#player2 {
+#player2{
+  grid-column-start: 1;
+  grid-row: 2;
+  /*span 3 / span 3;*/
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(90deg);
+}
+
+#player3{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: span 2 / span 2;
+    grid-row-start: 1;
+    grid-column-start: 2;
+
+  /*
   grid-column-start: 2;
+  grid-column: span 2/span 3;
+  justify-content: center;
+  */
+}
+
+#player4{
+  grid-column-start: 4;
+  grid-row: 2;
+  /*span 3 / span 3;*/
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(270deg);
 }
 
 .uno-logo-juego {
@@ -229,12 +271,14 @@ h2 {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
-#center-area {
-  display: flex;
+#center-area{
+  display:flex;
   justify-content: center;
   align-items: center;
+  grid-column: span 2/span 2;
   grid-row-start: 2;
   grid-column-start: 2;
+  padding:20px;
 }
 
 #deck,

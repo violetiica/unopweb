@@ -47,7 +47,7 @@ const game = {
 
 function startGame() {
   initializeDeck();
-  createPlayers(2);
+  createPlayers(4);
   dealCards();
   showCards();
   game.players = players;
