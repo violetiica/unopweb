@@ -225,16 +225,16 @@ function playCard(playerIndex, card) {
         direction *= -1;
         game.direction = direction;
         if (players.length === 2) {
-          nextTurn(true);
+          setTimeout(() => nextTurn(true), 800);
           return;
         }
       }
       if (card.value === "jump") {
         if (players.length === 2) {
-          nextTurn(true);
+          setTimeout(() => nextTurn(true), 800);
           return;
         } else {
-          nextTurn();
+          setTimeout(() => nextTurn(), 800);
           return;
         }
       }
@@ -244,7 +244,10 @@ function playCard(playerIndex, card) {
         if (nextIndex < 0) nextIndex = players.length - 1;
         forceDraw(nextIndex, 2);
         if (players.length === 2) {
-          nextTurn(true);
+          setTimeout(() => nextTurn(true), 1200);
+          return;
+        } else {
+          setTimeout(() => nextTurn(), 1200);
           return;
         }
       }
