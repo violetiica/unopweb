@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UNO Web</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body onclick="PlayAudio()">
 
+<head>
+  <meta charset="UTF-8" />
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNO Web</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap" rel="stylesheet" />
+</head>
+
+<body onclick="PlayAudio()">
+  <main>
     <div id="welcome-screen">
       <img src="Assets/UNO_Logo.svg.png" alt="UNO Logo" class="uno-logo">
       <h1>Web Edition</h1>
-      <button onclick="startGame()" class="start-button">JUGAR</button>
+      <button onclick="window.location.href='interfazdejuego.html'" class="start-button">JUGAR</button>
       <button class="rules-button" onclick="openModal()">REGLAS</button>
     </div>
 
@@ -50,56 +49,48 @@
             <li> Se reparten 7 cartas a cada jugador.</li>
             <li>Se coloca una carta en la zona de descarte.</li>
             <li>El jugador a la izquierda del repartidor comienza la ronda.</li>
-            <li>En su turno, el jugador debe lanzar una carta del mismo número o 
+            <li>En su turno, el jugador debe lanzar una carta del mismo número o
               color que la carta en la zona de descarte (incluyendo salto, reversa y +2).</li>
             <li>Si no tiene una carta válida, debe tomar una del mazo.</li>
             <li>Si la carta robada es jugable, puede lanzarla en la zona de descarte inmediatamente.</li>
             <li>El jugador puede lanzar cualquier comodín en su turno.</li>
             <li>Si un jugador queda con una sola carta, debe gritar "UNO"</li>
-            <li>Si un jugador canta antes el “UNO” en tu contra, se deben tomar 2 cartas del mazo como castigo, y el juego continúa.</li>
-            <li>Una vez que un jugador se queda sin cartas, la ronda termina. Se anotan los puntos (ver PUNTUACIÓN) y el juego comienza de nuevo.</li>
-            <li>Una vez que se ha sumado la puntuación de la ronda, si ningún jugador ha alcanzado los 500 puntos, se barajan las cartas y comienza
+            <li>Si un jugador canta antes el “UNO” en tu contra, se deben tomar 2 cartas del mazo como castigo, y el
+              juego continúa.</li>
+            <li>Una vez que un jugador se queda sin cartas, la ronda termina. Se anotan los puntos (ver PUNTUACIÓN) y el
+              juego comienza de nuevo.</li>
+            <li>Una vez que se ha sumado la puntuación de la ronda, si ningún jugador ha alcanzado los 500 puntos, se
+              barajan las cartas y comienza
               una nueva ronda.</li>
           </ul>
         </ul>
         <ul>
-        <li><strong>Puntuación:</strong></li>Cuando un jugador se queda sin cartas, recibe puntos por las cartas que les queden a sus oponentes:<br>
-        <ul>
-          <li>Todas las cartas numéricas (0-9): Valor nominal</li>
-          <li>Roba Dos (+2): 20 puntos</li>
-          <li>Reversa: 20 puntos</li>
-          <li>Salto: 20 puntos</li>
-          <li>Comodín (cambio de color): 50 puntos</li>
-          <li>Comodín +4: 50 puntos</li>
+          <li><strong>Puntuación:</strong></li>Cuando un jugador se queda sin cartas, recibe puntos por las cartas que
+          les queden a sus oponentes:<br>
+          <ul>
+            <li>Todas las cartas numéricas (0-9): Valor nominal</li>
+            <li>Roba Dos (+2): 20 puntos</li>
+            <li>Reversa: 20 puntos</li>
+            <li>Salto: 20 puntos</li>
+            <li>Comodín (cambio de color): 50 puntos</li>
+            <li>Comodín +4: 50 puntos</li>
+          </ul>
         </ul>
-        </ul>
-      </p>
+        </p>
       </div>
     </div>
+  </main>
 
-    <div id="game-container" class="hidden">
-      <img src="Assets/UNO_Logo.svg.png" alt="UNO Logo" class="uno-logo-juego">
-      <img src="Assets/volver.png" alt="Volver al inicio" class="volver-button" onclick="location.reload()">
-      <!--
-      <div id="deckspile">
-        <div id="discard-pile"></div>
-        <div id="deck"></div>
-      </div>
-      -->
-      <div id="players-area">
-      </div>
-        <button class="uno-button">¡UNO!</button>
-    </div>
-    
   <footer class="footer">
-  © 2025 UNO Web. Todos los derechos reservados a Patricia Docasar, Laura Martinez y Violeta Semprum.
+    © 2025 UNO Web. Todos los derechos reservados a Patricia Docasar, Laura Martinez y Violeta Semprum.
   </footer>
 
   <audio id="audio-bg" controls loop autoplay hidden>
     <source src="Assets/Sounds/game-bg-music.mp3" type="audio/mpeg">
   </audio>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 
-  </body>
+</body>
+
 </html>
