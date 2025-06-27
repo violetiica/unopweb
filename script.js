@@ -166,6 +166,7 @@ function showCards() {
     playerDiv.innerHTML = `<h3>${player.name}</h3>`;
     player.cards.forEach((card) => {
       const img = document.createElement("img");
+<<<<<<< Updated upstream
       if (player.id !== "player1") {
         img.src = `Assets/backcard.png`;
       } else {
@@ -178,6 +179,12 @@ function showCards() {
       }
       playerDiv.appendChild(img);
     });
+=======
+      player.id !== "player1" ? img.src = "Assets/backcard.png" : img.src = `Assets/${card.id}.png`;
+      img.className = "card-img";
+       playerDiv.appendChild(img);
+    })
+>>>>>>> Stashed changes
   }
   deckArea.innerHTML = "";
   discardPileArea.innerHTML = "";
