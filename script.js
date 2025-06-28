@@ -220,6 +220,19 @@ async function playCard(playerIndex, card) {
     currentPlayer.cards.splice(cardIndex, 1);
     game.currentCard = card;
 
+    if (currentPlayer.cards.length === 1) {
+      if (!currentPlayer.isHuman) {
+        setTimeout(() => {
+          currentPlayer.saidUNO = true;
+          alert(`${currentPlayer.name} ha dicho UNO!`);
+        }, 200);
+      }
+    } else if (currentPlayer.cards.length === 0) {
+      alert(`${currentPlayer.name} ha ganado la ronda!`);
+      game.roundWinner = currentPlayer;
+      //finalizar la ronda y contar puntos.
+    }
+
     // efectos de cartas especiales
     if (card.type === "special") {
       if (card.value === "reverse") {
@@ -260,6 +273,7 @@ async function playCard(playerIndex, card) {
           chosenColor = await chooseColor();
         } else {
           chosenColor = getRandomColor();
+          alert(`El nuevo color es: ${chosenColor}`);
         }
         discardPile[discardPile.length - 1].color = chosenColor;
         if (card.value === "draw4") {
@@ -359,11 +373,24 @@ function getRandomColor() {
   return colors[Math.floor(Math.random() * colors.length)];
 }
 
-function checkUNO() {}
+function checkUNO() {
+  const player = players[0];
+  if (currentPlayerIndex === 0) {
+    if (player.cards.length === 2 && !player.saidUNO) {
+      player.saidUNO = true;
+      alert("¡Has dicho UNO correctamente!");
+    } else {
+      forceDraw(0, 2);
+      alert("¡Penalización! Solo puedes decir UNO cuando te queda una carta.");
+    }
+  }
+}
 
 function countPoints() {}
 
 function resetRound() {}
+
+document.querySelector(".uno-button").addEventListener("click", checkUNO);
 
 function openModal() {
   document.getElementById("modal-reglas").style.display = "block";
