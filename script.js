@@ -14,6 +14,7 @@ let gameContainer = document.getElementById("game-container");
 let deckArea = document.getElementById("deck");
 let discardPileArea = document.getElementById("discard-pile");
 let welcomeScreen = document.getElementById("welcome-screen");
+let colorChoiceModal = document.getElementById("color-choice-modal");
 
 //cards
 const card = {
@@ -209,7 +210,7 @@ function validCard(card, topCard) {
   );
 }
 
-function playCard(playerIndex, card) {
+async function playCard(playerIndex, card) {
   const currentPlayer = players[playerIndex];
   const topCard = discardPile[discardPile.length - 1];
 
@@ -234,8 +235,9 @@ function playCard(playerIndex, card) {
           setTimeout(() => nextTurn(true), 800);
           return;
         } else {
-          setTimeout(() => nextTurn(), 800);
-          return;
+          currentPlayerIndex += direction;
+          if (currentPlayerIndex >= players.length) currentPlayerIndex = 0;
+          if (currentPlayerIndex < 0) currentPlayerIndex = players.length - 1;
         }
       }
       if (card.value === "draw2") {
@@ -244,14 +246,39 @@ function playCard(playerIndex, card) {
         if (nextIndex < 0) nextIndex = players.length - 1;
         forceDraw(nextIndex, 2);
         if (players.length === 2) {
-          setTimeout(() => nextTurn(true), 1200);
+          setTimeout(() => nextTurn(true), 800);
           return;
         } else {
-          setTimeout(() => nextTurn(), 1200);
-          return;
+          currentPlayerIndex += direction;
+          if (currentPlayerIndex >= players.length) currentPlayerIndex = 0;
+          if (currentPlayerIndex < 0) currentPlayerIndex = players.length - 1;
         }
       }
-      // Para draw4 y changeColor
+      if (card.value === "changeColor" || card.value === "draw4") {
+        let chosenColor;
+        if (players[playerIndex].isHuman) {
+          chosenColor = await chooseColor();
+        } else {
+          chosenColor = getRandomColor();
+        }
+        discardPile[discardPile.length - 1].color = chosenColor;
+        if (card.value === "draw4") {
+          let nextIndex = currentPlayerIndex + direction;
+          if (nextIndex >= players.length) nextIndex = 0;
+          if (nextIndex < 0) nextIndex = players.length - 1;
+          forceDraw(nextIndex, 4);
+          if (players.length === 2) {
+            nextTurn(true);
+            return;
+          } else {
+            currentPlayerIndex += direction;
+            if (currentPlayerIndex >= players.length) currentPlayerIndex = 0;
+            if (currentPlayerIndex < 0) currentPlayerIndex = players.length - 1;
+          }
+        }
+        setTimeout(() => nextTurn(), 800);
+        return;
+      }
     }
     nextTurn();
   } else {
@@ -311,6 +338,25 @@ function nextTurn(skipAdvance = false) {
   if (!players[currentPlayerIndex].isHuman) {
     setTimeout(() => botTurn(currentPlayerIndex), 700);
   }
+}
+
+function chooseColor() {
+  return new Promise((resolve) => {
+    colorChoiceModal.classList.remove("hidden");
+    colorChoiceModal.style.display = "flex";
+    const colorButtons = document.querySelectorAll(".color-button");
+    colorButtons.forEach((button) => {
+      button.onclick = () => {
+        const chosenColor = button.dataset.color;
+        colorChoiceModal.style.display = "none";
+        resolve(chosenColor);
+      };
+    });
+  });
+}
+
+function getRandomColor() {
+  return colors[Math.floor(Math.random() * colors.length)];
 }
 
 function checkUNO() {}

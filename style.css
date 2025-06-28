@@ -187,24 +187,24 @@ h2 {
 }
 
 #players-area {
-  margin:auto 80px;
+  margin: auto 80px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 30px;
-  padding:15px;
+  padding: 15px;
   justify-content: center;
   align-items: center;
 }
 
 #player1 {
   display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-column: span 2 / span 2;
-    grid-row-start: 3;
-    grid-column-start: 2;
-    
+  justify-content: center;
+  align-items: center;
+  grid-column: span 2 / span 2;
+  grid-row-start: 3;
+  grid-column-start: 2;
+
   /*
   grid-column-start: 2;
   grid-column: span 2/span 2;
@@ -218,23 +218,23 @@ h2 {
   transition: transform 0.2s;
 }
 
-#player2{
+#player2 {
   grid-column-start: 1;
   grid-row: 2;
   /*span 3 / span 3;*/
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   transform: rotate(90deg);
 }
 
-#player3{
+#player3 {
   display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-column: span 2 / span 2;
-    grid-row-start: 1;
-    grid-column-start: 2;
+  justify-content: center;
+  align-items: center;
+  grid-column: span 2 / span 2;
+  grid-row-start: 1;
+  grid-column-start: 2;
 
   /*
   grid-column-start: 2;
@@ -243,11 +243,11 @@ h2 {
   */
 }
 
-#player4{
+#player4 {
   grid-column-start: 4;
   grid-row: 2;
   /*span 3 / span 3;*/
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   transform: rotate(270deg);
@@ -271,14 +271,14 @@ h2 {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
-#center-area{
-  display:flex;
+#center-area {
+  display: flex;
   justify-content: center;
   align-items: center;
-  grid-column: span 2/span 2;
+  grid-column: span 2 / span 2;
   grid-row-start: 2;
   grid-column-start: 2;
-  padding:20px;
+  padding: 20px;
 }
 
 #deck,
@@ -305,4 +305,63 @@ h2 {
   box-shadow: 0 0 16px 4px #ffe066, 0 0 4px 2px #ffb700;
   border: 1px solid #ffe066;
   transition: box-shadow 0.2s, border 0.2s;
+}
+
+/*Cositos para el modal de cambio de color*/
+.modal {
+  display: none; /* Oculto por defecto */
+  position: fixed; /* Permanece en la misma posición al hacer scroll */
+  z-index: 10; /* Se sitúa por encima de todo lo demás */
+  left: 0;
+  top: 0;
+  width: 100%; /* Ancho completo */
+  height: 100%; /* Alto completo */
+  overflow: auto; /* Habilita el scroll si es necesario */
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+  display: flex; /* Para centrar el contenido */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* O el tamaño que prefieras */
+  max-width: 400px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.color-options {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.color-button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid #333;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.color-button:hover {
+  transform: scale(1.1);
+}
+
+/* Colores de los botones */
+.color-button.red {
+  background-color: red;
+}
+.color-button.green {
+  background-color: green;
+}
+.color-button.blue {
+  background-color: blue;
+}
+.color-button.yellow {
+  background-color: yellow;
 }

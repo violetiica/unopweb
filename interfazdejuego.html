@@ -1,33 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UNO Web</title>
     <link rel="stylesheet" href="style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap"
       rel="stylesheet"
     />
-</head>
-<body onload = "startGame()">
+  </head>
+  <body onload="startGame()">
     <div id="game-container">
-      <img src="Assets/UNO_Logo.svg.png" alt="UNO Logo" class="uno-logo-juego">
-      <img src="Assets/volver.png" alt="Volver al inicio" class="volver-button" onclick="location.reload()">
+      <img
+        src="Assets/UNO_Logo.svg.png"
+        alt="UNO Logo"
+        class="uno-logo-juego"
+      />
+      <img
+        src="Assets/volver.png"
+        alt="Volver al inicio"
+        class="volver-button"
+        onclick="location.reload()"
+      />
       <!--
       <div id="deckspile">
         <div id="discard-pile"></div>
         <div id="deck"></div>
       </div>
       -->
-      <div id="players-area">
-      </div>
-        <button class="uno-button">¡UNO!</button>
+      <div id="players-area"></div>
+      <button class="uno-button">¡UNO!</button>
     </div>
-    
+
+    <div id="color-choice-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Elige un color</h2>
+        <div class="color-options">
+          <button class="color-button red" data-color="red"></button>
+          <button class="color-button green" data-color="green"></button>
+          <button class="color-button blue" data-color="blue"></button>
+          <button class="color-button yellow" data-color="yellow"></button>
+        </div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
-</body>
-
-
+  </body>
 </html>
