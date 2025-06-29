@@ -162,7 +162,9 @@ function showCards() {
   let discardPileArea = document.getElementById("discard-pile");
   for (let player of players) {
     const playerDiv = document.getElementById(`${player.id}`);
-    playerDiv.innerHTML = `<h3>${player.name}</h3>`;
+    playerDiv.innerHTML = `<div class=nameofPlayer><h3>${player.name}</h3></div>`;
+    const handDiv = document.createElement("div");
+    handDiv.className = "hand";
     player.cards.forEach((card) => {
       const img = document.createElement("img");
       if (player.id !== "player1") {
@@ -175,8 +177,9 @@ function showCards() {
       if (players.indexOf(player) === currentPlayerIndex) {
         img.classList.add("active-card");
       }
-      playerDiv.appendChild(img);
+      handDiv.appendChild(img);
     });
+    playerDiv.appendChild(handDiv);
   }
   deckArea.innerHTML = "";
   discardPileArea.innerHTML = "";
@@ -397,7 +400,7 @@ function openModal() {
 }
 
 function closeModal() {
-  document.getElementById("modal-reglas").style.display = "none";
+  document.getElementById('modal-reglas').style.display = 'none';
 }
 
 // cerrar el modal al hacer clic fuera del contenido

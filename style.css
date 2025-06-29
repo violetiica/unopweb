@@ -9,6 +9,8 @@ html {
   display: none !important;
 }
 
+
+
 #welcome-screen {
   background-image: url("Assets/Fondo.png");
   background-size: cover;
@@ -21,11 +23,16 @@ html {
 }
 
 #game-container {
+  transform: scale(0.67);
+  transform-origin: top left;
+  width: 150vw;   /* 100vw / 0.67 ≈ 150vw, adjust as needed */
+  height: 150vh;
+  position:absolute;
   background-image: url("Assets/FondoJuego.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  min-height: 100vh;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -150,7 +157,7 @@ h2 {
   text-align: center;
 }
 
-.modal-content {
+.modal-contentrules {
   background: #fff;
   margin: 10% auto;
   padding: 60px 50px;
@@ -173,9 +180,9 @@ h2 {
   font-weight: bold;
 }
 
-.modal-content p,
-.modal-content div,
-.modal-content {
+.modal-contentrules p,
+.modal-contentrules div,
+.modal-contentrules {
   text-align: justify;
 }
 
@@ -189,27 +196,26 @@ h2 {
 #players-area {
   margin: auto 80px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 400px);
+  grid-template-rows: repeat(3, 200px);
   gap: 30px;
   padding: 15px;
   justify-content: center;
   align-items: center;
+  min-height: 600px;
+  overflow: auto; 
+}
+
+.player{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #player1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   grid-column: span 2 / span 2;
   grid-row-start: 3;
   grid-column-start: 2;
-
-  /*
-  grid-column-start: 2;
-  grid-column: span 2/span 2;
-  grid-row-start: 3;
-  justify-content: center;*/
 }
 
 #player1 .card-img:hover {
@@ -218,37 +224,40 @@ h2 {
   transition: transform 0.2s;
 }
 
+.nameofPlayer{
+  color: #ffb700;
+  text-align: left;
+  width:70%;
+  display: block;
+}
+
+.hand{
+  display:flex;
+  flex-wrap: wrap;
+  max-width: 700px;
+ /*width: 100%;*/
+  align-content: center;
+  justify-content:center;
+}
+
 #player2 {
   grid-column-start: 1;
   grid-row: 2;
-  /*span 3 / span 3;*/
-  display: flex;
-  align-items: center;
   justify-content: center;
   transform: rotate(90deg);
 }
 
 #player3 {
-  display: flex;
   justify-content: center;
-  align-items: center;
   grid-column: span 2 / span 2;
   grid-row-start: 1;
   grid-column-start: 2;
-
-  /*
-  grid-column-start: 2;
-  grid-column: span 2/span 3;
-  justify-content: center;
-  */
+  transform: rotate(180deg);
 }
 
 #player4 {
   grid-column-start: 4;
   grid-row: 2;
-  /*span 3 / span 3;*/
-  display: flex;
-  align-items: center;
   justify-content: center;
   transform: rotate(270deg);
 }
@@ -318,7 +327,7 @@ h2 {
   height: 100%; /* Alto completo */
   overflow: auto; /* Habilita el scroll si es necesario */
   background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
-  display: flex; /* Para centrar el contenido */
+  /*display: flex;  Para centrar el contenido */
   justify-content: center;
   align-items: center;
 }
