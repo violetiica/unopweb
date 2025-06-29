@@ -382,8 +382,7 @@ function getRandomColor() {
 function checkUNO() {
   const player = players[0];
   let validUNO = false;
-  if (currentPlayerIndex === 0) {
-    if (player.cards.length === 2 && !player.saidUNO) {
+    if (player.cards.length === 17 && !player.saidUNO) {
       for (let card of player.cards) {
         if (validCard(card, discardPile[discardPile.length - 1])) {
           validUNO = true;
@@ -399,7 +398,6 @@ function checkUNO() {
       forceDraw(0, 2);
       alert("¡Penalización! Solo puedes decir UNO cuando te queda una carta.");
     }
-  }
 }
 
 function countPoints() {}
