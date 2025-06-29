@@ -227,11 +227,11 @@ async function playCard(playerIndex, card) {
       if (!currentPlayer.isHuman) {
         setTimeout(() => {
           currentPlayer.saidUNO = true;
-          alert(`${currentPlayer.name} ha dicho UNO!`);
+          showModalAlert(`${currentPlayer.name} ha dicho UNO!`);
         }, 200);
       }
     } else if (currentPlayer.cards.length === 0) {
-      alert(`${currentPlayer.name} ha ganado la ronda!`);
+      showModalAlert(`${currentPlayer.name} ha ganado la ronda!`);
       game.roundWinner = currentPlayer;
       //finalizar la ronda y contar puntos.
     }
@@ -276,7 +276,7 @@ async function playCard(playerIndex, card) {
           chosenColor = await chooseColor();
         } else {
           chosenColor = getRandomColor();
-          alert(`El nuevo color es: ${chosenColor}`);
+          showModalAlert(`El nuevo color es: ${chosenColor}`);
         }
         discardPile[discardPile.length - 1].color = chosenColor;
         if (card.value === "draw4") {
@@ -299,7 +299,7 @@ async function playCard(playerIndex, card) {
     }
     nextTurn();
   } else {
-    alert("No puedes jugar esa carta!");
+    showModalAlert("No puedes jugar esa carta!");
   }
 }
 
@@ -353,7 +353,7 @@ function nextTurn(skipAdvance = false) {
   game.turn = currentPlayerIndex;
   const currentPlayer = players[currentPlayerIndex];
   if (currentPlayer.cards.length === 1 && !currentPlayer.saidUNO) {
-    alert(`¡${currentPlayer.name} NO ha dicho UNO! ¡Penalización!`);
+    showModalAlert(`¡${currentPlayer.name} NO ha dicho UNO! ¡Penalización!`);
     forceDraw(currentPlayerIndex, 2);
   }
   currentPlayer.saidUNO = false;
@@ -386,10 +386,10 @@ function checkUNO() {
   const player = players[0];
   if (player.cards.length === 1 && !player.saidUNO) {
     player.saidUNO = true;
-    alert("¡Has dicho UNO!");
+    showModalAlert("¡Has dicho UNO!");
   } else {
     forceDraw(0, 2);
-    alert("¡Penalización! Solo puedes decir UNO cuando te queda una carta.");
+    showModalAlert("¡Penalización! Solo puedes decir UNO cuando te queda una carta.");
   }
 }
 
@@ -418,4 +418,19 @@ window.onclick = function (event) {
 //MUSICA
 function PlayAudio() {
   document.getElementById("audio-bg").play();
+}
+
+//Modales Alerta
+function showModalAlert(message, callback) {
+  const modal = document.getElementById('modal-alert');
+  const msg = document.getElementById('modal-alert-message');
+  const okBtn = document.getElementById('modal-alert-OK');
+  msg.textContent = message;
+  modal.style.display = 'flex'; // Muestra el modal
+
+  // Al hacer clic en OK, cierra el modal y ejecuta el callback si existe
+  okBtn.onclick = () => {
+    modal.style.display = 'none';
+    if (callback) callback();
+  };
 }

@@ -117,7 +117,8 @@ h1 {
 
 .start-button:hover,
 .rules-button:hover,
-.uno-button:hover {
+.uno-button:hover,
+#modal-alert-OK:hover {
   transform: translateY(-3px) scale(1.04);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
   background: linear-gradient(90deg, #deab06 0%, #c92020 100%);
@@ -374,3 +375,40 @@ h2 {
 .color-button.yellow {
   background-color: yellow;
 }
+
+/* Modal Alertas */
+.modal-content-alert {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  margin: 10% auto;
+  padding: 60px 50px;
+  border-radius: 16px;
+  width: 130%;
+  max-width: 170px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+  text-align: center;
+  font-size: 1.3rem;
+  gap: 1px;
+}
+
+#modal-alert-OK{
+  background: linear-gradient(90deg, #c92020 0%, #deab06 100%);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 40px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  margin-top: 28px;
+  letter-spacing: 1.5px;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.3s;
+  outline: none;
+  display: inline-block;
+}
+
+
+
