@@ -382,23 +382,12 @@ function getRandomColor() {
 function checkUNO() {
   const player = players[0];
   let validUNO = false;
-  if (currentPlayerIndex === 0) {
-    if (player.cards.length === 2 && !player.saidUNO) {
-      for (let card of player.cards) {
-        if (validCard(card, discardPile[discardPile.length - 1])) {
-          validUNO = true;
-        }
-      }
-      if (validUNO) {
-        player.saidUNO = true;
-        alert("¡Has dicho UNO!");
-      } else {
-        alert("No tienes cartas jugables, no puedes decir UNO!");
-      }
-    } else {
-      forceDraw(0, 2);
-      alert("¡Penalización! Solo puedes decir UNO cuando te queda una carta.");
-    }
+  if (player.cards.length === 1 && !player.saidUNO) {
+    player.saidUNO = true;
+    alert("¡Has dicho UNO!");
+  } else {
+    forceDraw(0, 2);
+    alert("¡Penalización! Solo puedes decir UNO cuando te queda una carta.");
   }
 }
 
