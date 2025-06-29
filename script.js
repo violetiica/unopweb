@@ -381,7 +381,6 @@ function getRandomColor() {
 
 function checkUNO() {
   const player = players[0];
-  let validUNO = false;
   if (player.cards.length === 1 && !player.saidUNO) {
     player.saidUNO = true;
     alert("¡Has dicho UNO!");
