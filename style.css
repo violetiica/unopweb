@@ -11,7 +11,13 @@ html {
 
 
 
+
 #welcome-screen {
+  position:fixed;
+  transform: scale(0.67);
+  transform-origin: top left;
+  width: 150vw;  
+  height: 150vh;
   background-image: url("Assets/Fondo.png");
   background-size: cover;
   background-repeat: no-repeat;
@@ -23,16 +29,15 @@ html {
 }
 
 #game-container {
+  position:fixed;
   transform: scale(0.67);
   transform-origin: top left;
-  width: 150vw;   /* 100vw / 0.67 ≈ 150vw, adjust as needed */
+  width: 150vw;  
   height: 150vh;
-  position:absolute;
   background-image: url("Assets/FondoJuego.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -159,12 +164,12 @@ h2 {
 }
 
 .modal-contentrules {
+  transform: scale(0.67);
+  transform-origin: top;
   background: #fff;
   margin: 10% auto;
   padding: 60px 50px;
   border-radius: 16px;
-  width: 150%;
-  max-width: 1500px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   position: relative;
   text-align: center;
@@ -195,16 +200,16 @@ h2 {
 }
 
 #players-area {
-  margin: auto 80px;
+  /*margin: auto;*/
   display: grid;
   grid-template-columns: repeat(4, 400px);
-  grid-template-rows: repeat(3, 200px);
+  grid-template-rows: repeat(3, 220px);
   gap: 30px;
   padding: 15px;
   justify-content: center;
   align-items: center;
   min-height: 600px;
-  overflow: auto; 
+  overflow: visible; 
 }
 
 .player{
@@ -236,7 +241,6 @@ h2 {
   display:flex;
   flex-wrap: wrap;
   max-width: 700px;
- /*width: 100%;*/
   align-content: center;
   justify-content:center;
 }
@@ -319,16 +323,15 @@ h2 {
 
 /*Cositos para el modal de cambio de color*/
 .modal {
-  display: none; /* Oculto por defecto */
-  position: fixed; /* Permanece en la misma posición al hacer scroll */
-  z-index: 10; /* Se sitúa por encima de todo lo demás */
+  display: none; 
+  position: fixed; 
+  /*z-index: 10;*/
   left: 0;
   top: 0;
-  width: 100%; /* Ancho completo */
-  height: 100%; /* Alto completo */
-  overflow: auto; /* Habilita el scroll si es necesario */
-  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
-  /*display: flex;  Para centrar el contenido */
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0, 0, 0, 0.7); 
   justify-content: center;
   align-items: center;
 }
