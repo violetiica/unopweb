@@ -351,6 +351,12 @@ function nextTurn(skipAdvance = false) {
     if (currentPlayerIndex < 0) currentPlayerIndex = players.length - 1;
   }
   game.turn = currentPlayerIndex;
+  const currentPlayer = players[currentPlayerIndex];
+  if (currentPlayer.cards.length === 1 && !currentPlayer.saidUNO) {
+    alert(`¡${currentPlayer.name} NO ha dicho UNO! ¡Penalización!`);
+    forceDraw(currentPlayerIndex, 2);
+  }
+  currentPlayer.saidUNO = false;
   showCards();
   if (!players[currentPlayerIndex].isHuman) {
     setTimeout(() => botTurn(currentPlayerIndex), 700);
@@ -378,14 +384,12 @@ function getRandomColor() {
 
 function checkUNO() {
   const player = players[0];
-  if (currentPlayerIndex === 0) {
-    if (player.cards.length === 2 && !player.saidUNO) {
-      player.saidUNO = true;
-      alert("¡Has dicho UNO correctamente!");
-    } else {
-      forceDraw(0, 2);
-      alert("¡Penalización! Solo puedes decir UNO cuando te queda una carta.");
-    }
+  if (player.cards.length === 1 && !player.saidUNO) {
+    player.saidUNO = true;
+    alert("¡Has dicho UNO!");
+  } else {
+    forceDraw(0, 2);
+    alert("¡Penalización! Solo puedes decir UNO cuando te queda una carta.");
   }
 }
 
