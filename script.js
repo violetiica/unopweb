@@ -233,13 +233,6 @@ async function playCard(playerIndex, card) {
       //finalizar la ronda y contar puntos.
     }
 
-    if (currentPlayer.cards.length === 1 && !currentPlayer.saidUNO) {
-      alert(`¡${currentPlayer.name} NO ha dicho UNO! ¡Penalización!`);
-      forceDraw(playerIndex, 2);
-    }
-
-    currentPlayer.saidUNO = false;
-
     // efectos de cartas especiales
     if (card.type === "special") {
       if (card.value === "reverse") {
@@ -355,6 +348,12 @@ function nextTurn(skipAdvance = false) {
     if (currentPlayerIndex < 0) currentPlayerIndex = players.length - 1;
   }
   game.turn = currentPlayerIndex;
+  const currentPlayer = players[currentPlayerIndex];
+  if (currentPlayer.cards.length === 1 && !currentPlayer.saidUNO) {
+    alert(`¡${currentPlayer.name} NO ha dicho UNO! ¡Penalización!`);
+    forceDraw(currentPlayerIndex, 2);
+  }
+  currentPlayer.saidUNO = false;
   showCards();
   if (!players[currentPlayerIndex].isHuman) {
     setTimeout(() => botTurn(currentPlayerIndex), 700);
