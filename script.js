@@ -248,6 +248,10 @@ async function playCard(playerIndex, card) {
           okBtn.textContent = "OK";
           players[currentPlayerIndex].points = points;
           resetRound();
+        },
+        true, 
+        () => {
+        window.location.href = "index.html"; 
         }
       );
       return;
@@ -532,10 +536,11 @@ function PlayAudio() {
 }
 
 //Modales Alerta
-function showModalAlert(message, callback) {
+function showModalAlert(message, callback,showExit = false, exitCallback = null) {
   const modal = document.getElementById("modal-alert");
   const msg = document.getElementById("modal-alert-message");
   const okBtn = document.getElementById("modal-alert-OK");
+  const exitBtn = document.getElementById("modal-alert-EXIT");
   msg.textContent = message;
   modal.style.display = "flex";
 
@@ -543,6 +548,17 @@ function showModalAlert(message, callback) {
     modal.style.display = "none";
     if (callback) callback();
   };
+
+  if (showExit) {
+    exitBtn.style.display = "inline-block";
+    exitBtn.onclick = () => {
+      modal.style.display = "none";
+      if (exitCallback) exitCallback();
+    };
+  } else {
+    exitBtn.style.display = "none";
+    exitBtn.onclick = null;
+  }
 }
 
 window.onload = function () {
