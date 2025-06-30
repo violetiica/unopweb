@@ -377,7 +377,7 @@ function forceDraw(playerIndex, n) {
 
 function replenishDeck() {
   if (deck.length === 0) {
-    const topCard = discardPile.pop(); // conserva la carta visible
+    const topCard = discardPile.pop();
     deck = discardPile;
     discardPile = [topCard];
     shuffleDeck();
