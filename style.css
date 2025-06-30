@@ -118,7 +118,8 @@ h1 {
 .start-button:hover,
 .rules-button:hover,
 .uno-button:hover,
-#modal-alert-OK:hover {
+#modal-alert-OK:hover,
+#modal-jugadores-aceptar:hover {
   transform: translateY(-3px) scale(1.04);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
   background: linear-gradient(90deg, #deab06 0%, #c92020 100%);
@@ -377,7 +378,7 @@ h2 {
 }
 
 /* Modal Alertas */
-.modal-content-alert {
+.modal-content-alert{
   display: flex;
   flex-direction: column;
   background: #fff;
@@ -393,7 +394,8 @@ h2 {
   gap: 1px;
 }
 
-#modal-alert-OK{
+#modal-alert-OK,
+#modal-jugadores-aceptar {
   background: linear-gradient(90deg, #c92020 0%, #deab06 100%);
   color: #fff;
   font-size: 1rem;
@@ -410,5 +412,44 @@ h2 {
   display: inline-block;
 }
 
+/* Modal Jugadores */
 
+.modal-content-jugadores{
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  margin: 10% auto;
+  padding: 60px 50px;
+  border-radius: 16px;
+  width: 130%;
+  max-width: 300px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+  text-align: center;
+}
 
+/* Select del Modal Jugadores */
+
+.select-jugadores-box{
+  position: relative;
+  width: 200px;
+  margin: 0 auto 18px auto;
+}
+
+.select-jugadores{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  appearance: none;
+  background-size: 12px;
+}
+
+#num-jugadores {
+  background-color: #f9f9f9;
+  border-color: #c92020;
+}
+
+#num-jugadores:hover {
+  border-color: #deab06;
+}

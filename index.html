@@ -15,8 +15,23 @@
     <div id="welcome-screen">
       <img src="Assets/UNO_Logo.svg.png" alt="UNO Logo" class="uno-logo">
       <h1>Web Edition</h1>
-      <button onclick="window.location.href='interfazdejuego.html'" class="start-button">JUGAR</button>
+      <button onclick="openModalJugadores()" class="start-button">JUGAR</button>
       <button class="rules-button" onclick="openModal()">REGLAS</button>
+    </div>
+
+    <div id="modal-jugadores" class="modal">
+      <div class="modal-content-jugadores">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Elige el número de jugadores:</h2>
+        <div class="select-jugadores-box"> 
+          <select id="num-jugadores" class="select-jugadores">
+            <option value="2">2 jugadores</option>
+            <option value="3">3 jugadores</option>
+            <option value="4">4 jugadores</option>
+          </select>
+          <button id="modal-jugadores-aceptar" onclick="goToGame()">Aceptar</button>
+        </div>
+      </div>
     </div>
 
     <div id="modal-reglas" class="modal">
@@ -75,7 +90,7 @@
   </main>
 
   <footer class="footer">
-    © 2025 UNO Web. Todos los derechos reservados a Patricia Docasar, Laura Martinez y Violeta Semprum.
+    © 2025 UNO Web. Todos los derechos reservados a Patricia Docasar, Laura Martinez y Violeta Semprum. Grupo 4.
   </footer>
 
   <audio id="audio-bg" controls loop autoplay hidden>
