@@ -46,7 +46,7 @@ const game = {
   roundWinner: null,
 };
 
-function startGame(numJugadores=4) {
+function startGame(numJugadores = 4) {
   initializeDeck();
   createPlayers(numJugadores);
   dealCards();
@@ -230,10 +230,23 @@ async function playCard(playerIndex, card) {
           showModalAlert(`${currentPlayer.name} ha dicho UNO!`);
         }, 200);
       }
-    } else if (currentPlayer.cards.length === 0) {
-      showModalAlert(`${currentPlayer.name} ha ganado la ronda!`);
-      game.roundWinner = currentPlayer;
-      //finalizar la ronda y contar puntos.
+    }
+
+    if (currentPlayer.cards.length === 0) {
+      showCards();
+      const points = countPoints();
+      const okBtn = document.getElementById("modal-alert-OK");
+      okBtn.textContent = "Volver a jugar";
+      showModalAlert(
+        `${currentPlayer.name} ha ganado la ronda! Su puntaje es ${points} `,
+        () => {
+          // reiniciar la ronda, contar puntos
+          okBtn.textContent = "OK";
+          players[currentPlayerIndex].points = points;
+          resetRound();
+        }
+      );
+      return;
     }
 
     // efectos de cartas especiales
@@ -349,6 +362,7 @@ function nextTurn(skipAdvance = false) {
     currentPlayerIndex += direction;
     if (currentPlayerIndex >= players.length) currentPlayerIndex = 0;
     if (currentPlayerIndex < 0) currentPlayerIndex = players.length - 1;
+    showCards();
   }
   game.turn = currentPlayerIndex;
   const currentPlayer = players[currentPlayerIndex];
@@ -389,7 +403,9 @@ function checkUNO() {
     showModalAlert("¡Has dicho UNO!");
   } else {
     forceDraw(0, 2);
-    showModalAlert("¡Penalización! Solo puedes decir UNO cuando te queda una carta.");
+    showModalAlert(
+      "¡Penalización! Solo puedes decir UNO cuando te queda una carta."
+    );
   }
 }
 
@@ -441,7 +457,9 @@ function openModal() {
 }
 
 function closeModal() {
-  document.querySelectorAll('.modal').forEach(modal => modal.style.display = 'none');
+  document
+    .querySelectorAll(".modal")
+    .forEach((modal) => (modal.style.display = "none"));
 }
 
 // cerrar el modal al hacer clic fuera del contenido
@@ -453,13 +471,13 @@ window.onclick = function (event) {
 };
 
 function openModalJugadores() {
-  document.getElementById('modal-jugadores').style.display = 'flex';
+  document.getElementById("modal-jugadores").style.display = "flex";
 }
 
 function goToGame() {
-  const num= document.getElementById('num-jugadores').value;
-  localStorage.setItem('numJugadores', num);
-  window.location.href = 'interfazdejuego.html';
+  const num = document.getElementById("num-jugadores").value;
+  localStorage.setItem("numJugadores", num);
+  window.location.href = "interfazdejuego.html";
 }
 
 //MUSICA
@@ -469,23 +487,23 @@ function PlayAudio() {
 
 //Modales Alerta
 function showModalAlert(message, callback) {
-  const modal = document.getElementById('modal-alert');
-  const msg = document.getElementById('modal-alert-message');
-  const okBtn = document.getElementById('modal-alert-OK');
+  const modal = document.getElementById("modal-alert");
+  const msg = document.getElementById("modal-alert-message");
+  const okBtn = document.getElementById("modal-alert-OK");
   msg.textContent = message;
-  modal.style.display = 'flex'; // Muestra el modal
+  modal.style.display = "flex"; // Muestra el modal
 
   // Al hacer clic en OK, cierra el modal y ejecuta el callback si existe
   okBtn.onclick = () => {
-    modal.style.display = 'none';
+    modal.style.display = "none";
     if (callback) callback();
   };
 }
 
-window.onload = function() {
+window.onload = function () {
   // Si estás en interfazdejuego.html, usa el número de jugadores guardado
   if (document.getElementById("players-area")) {
-    const numJugadores = parseInt(localStorage.getItem('numJugadores') || '2');
+    const numJugadores = parseInt(localStorage.getItem("numJugadores") || "2");
     startGame(numJugadores);
   }
 };
