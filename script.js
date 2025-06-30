@@ -393,9 +393,46 @@ function checkUNO() {
   }
 }
 
-function countPoints() {}
+function countPoints() {
+  let points = 0;
+  for (let player of players) {
+    for (let card of player.cards) {
+      if (card.type === "number") {
+        points += card.value;
+      } else if (card.type === "special") {
+        if (
+          card.value === "draw2" ||
+          card.value === "reverse" ||
+          card.value === "jump"
+        ) {
+          points += 20;
+        }
+        if (card.value === "changeColor" || card.value === "draw4") {
+          points += 50;
+        }
+      }
+    }
+  }
+  return points;
+}
 
-function resetRound() {}
+function resetRound() {
+  for (let player of players) {
+    player.cards = [];
+    player.saidUNO = false;
+  }
+  deck = [];
+  discardPile = [];
+  initializeDeck();
+  dealCards();
+  showCards();
+  currentPlayerIndex = 0;
+  game.turn = currentPlayerIndex;
+  game.direction = 1;
+  game.currentCard = discardPile[discardPile.length - 1];
+  game.waitingForColor = false;
+  game.roundWinner = null;
+}
 
 document.querySelector(".uno-button").addEventListener("click", checkUNO);
 
