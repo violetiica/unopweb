@@ -274,27 +274,51 @@ async function playCard(playerIndex, card) {
         let chosenColor;
         if (players[playerIndex].isHuman) {
           chosenColor = await chooseColor();
+          showModalAlert(`El nuevo color es: ${chosenColor}`, () => {
+            discardPile[discardPile.length - 1].color = chosenColor;
+            if (card.value === "draw4") {
+              let nextIndex = currentPlayerIndex + direction;
+              if (nextIndex >= players.length) nextIndex = 0;
+              if (nextIndex < 0) nextIndex = players.length - 1;
+              forceDraw(nextIndex, 4);
+              if (players.length === 2) {
+                nextTurn(true);
+                return;
+              } else {
+                currentPlayerIndex += direction;
+                if (currentPlayerIndex >= players.length)
+                  currentPlayerIndex = 0;
+                if (currentPlayerIndex < 0)
+                  currentPlayerIndex = players.length - 1;
+              }
+            }
+            setTimeout(() => nextTurn(), 800);
+          });
+          return;
         } else {
           chosenColor = getRandomColor();
-          showModalAlert(`El nuevo color es: ${chosenColor}`);
+          showModalAlert(`El nuevo color es: ${chosenColor}`, () => {
+            discardPile[discardPile.length - 1].color = chosenColor;
+            if (card.value === "draw4") {
+              let nextIndex = currentPlayerIndex + direction;
+              if (nextIndex >= players.length) nextIndex = 0;
+              if (nextIndex < 0) nextIndex = players.length - 1;
+              forceDraw(nextIndex, 4);
+              if (players.length === 2) {
+                nextTurn(true);
+                return;
+              } else {
+                currentPlayerIndex += direction;
+                if (currentPlayerIndex >= players.length)
+                  currentPlayerIndex = 0;
+                if (currentPlayerIndex < 0)
+                  currentPlayerIndex = players.length - 1;
+              }
+            }
+            setTimeout(() => nextTurn(), 800);
+          });
+          return;
         }
-        discardPile[discardPile.length - 1].color = chosenColor;
-        if (card.value === "draw4") {
-          let nextIndex = currentPlayerIndex + direction;
-          if (nextIndex >= players.length) nextIndex = 0;
-          if (nextIndex < 0) nextIndex = players.length - 1;
-          forceDraw(nextIndex, 4);
-          if (players.length === 2) {
-            nextTurn(true);
-            return;
-          } else {
-            currentPlayerIndex += direction;
-            if (currentPlayerIndex >= players.length) currentPlayerIndex = 0;
-            if (currentPlayerIndex < 0) currentPlayerIndex = players.length - 1;
-          }
-        }
-        setTimeout(() => nextTurn(), 800);
-        return;
       }
     }
     nextTurn();
