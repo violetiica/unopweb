@@ -228,17 +228,20 @@ async function playCard(playerIndex, card) {
         setTimeout(() => {
           currentPlayer.saidUNO = true;
           showModalAlert(`${currentPlayer.name} ha dicho UNO!`);
+          playUnoSound();
         }, 200);
       }
     } else if (currentPlayer.cards.length === 0) {
       showModalAlert(`${currentPlayer.name} ha ganado la ronda!`);
+      playWinSound();
       game.roundWinner = currentPlayer;
-      //finalizar la ronda y contar puntos.
+      //finalizar la ronda y contar puntos.   
     }
 
     // efectos de cartas especiales
     if (card.type === "special") {
       if (card.value === "reverse") {
+        playSkipReverseSound();
         direction *= -1;
         game.direction = direction;
         if (players.length === 2) {
@@ -247,6 +250,7 @@ async function playCard(playerIndex, card) {
         }
       }
       if (card.value === "jump") {
+        playSkipReverseSound();
         if (players.length === 2) {
           setTimeout(() => nextTurn(true), 800);
           return;
@@ -257,6 +261,7 @@ async function playCard(playerIndex, card) {
         }
       }
       if (card.value === "draw2") {
+        playPlusSound();
         let nextIndex = currentPlayerIndex + direction;
         if (nextIndex >= players.length) nextIndex = 0;
         if (nextIndex < 0) nextIndex = players.length - 1;
@@ -271,6 +276,7 @@ async function playCard(playerIndex, card) {
         }
       }
       if (card.value === "changeColor" || card.value === "draw4") {
+        playChangeColorSound();
         let chosenColor;
         if (players[playerIndex].isHuman) {
           chosenColor = await chooseColor();
@@ -280,6 +286,7 @@ async function playCard(playerIndex, card) {
         }
         discardPile[discardPile.length - 1].color = chosenColor;
         if (card.value === "draw4") {
+          playPlusSound();
           let nextIndex = currentPlayerIndex + direction;
           if (nextIndex >= players.length) nextIndex = 0;
           if (nextIndex < 0) nextIndex = players.length - 1;
@@ -300,6 +307,7 @@ async function playCard(playerIndex, card) {
     nextTurn();
   } else {
     showModalAlert("No puedes jugar esa carta!");
+    playErrorSound();
   }
 }
 
@@ -387,6 +395,7 @@ function checkUNO() {
   if (player.cards.length === 1 && !player.saidUNO) {
     player.saidUNO = true;
     showModalAlert("¡Has dicho UNO!");
+    playUnoSound();
   } else {
     forceDraw(0, 2);
     showModalAlert("¡Penalización! Solo puedes decir UNO cuando te queda una carta.");
@@ -452,3 +461,61 @@ window.onload = function() {
     startGame(numJugadores);
   }
 };
+
+//Musica Cartas
+function playUnoSound() {
+  const audio = document.getElementById('UNO-sound');
+  if (audio) {
+    audio.currentTime = 0; // Reinicia el sonido si ya está sonando
+    audio.play();
+  }
+}
+
+function playPlusSound() {
+  const audio = document.getElementById('plus-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+function playSkipReverseSound() {
+  const audio = document.getElementById('skip-reverse-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+
+function playReverseSound() {
+  const audio = document.getElementById('reverse-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+function playChangeColorSound() {
+  const audio = document.getElementById('change-color-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+function playWinSound() {
+  const audio = document.getElementById('win-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+function playErrorSound() {
+  const audio = document.getElementById('error-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
