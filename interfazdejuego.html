@@ -1,30 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UNO Web</title>
-    <link rel="icon" href="Assets/unofavicon.ico" type="/x-icon">
-    <link rel="stylesheet" href="style.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body onload="startGame()" onclick="PlayAudio()" >
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UNO Web</title>
+  <link rel="icon" href="Assets/unofavicon.ico" type="/x-icon">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap" rel="stylesheet" />
+</head>
+
+<body onload="startGame()" onclick="PlayAudio()">
+  <main>
     <div id="game-container">
-      <img
-        src="Assets/UNO_Logo.svg.png"
-        alt="UNO Logo"
-        class="uno-logo-juego"
-      />
-      <img
-        src="Assets/volver.png"
-        alt="Volver al inicio"
-        class="volver-button"
-        onclick="window.location.href='index.html'"
-      />
+    <div id=upbar>
+      <img src="Assets/UNO_Logo.svg.png" alt="UNO Logo" class="uno-logo-juego" />
+      <img src="Assets/volver.png" alt="Volver al inicio" class="volver-button"
+      onclick="window.location.href='index.html'" />
+    </div>
       <div id="players-area"></div>
       <button class="uno-button">¡UNO!</button>
     </div>
@@ -47,11 +41,14 @@
         <button id="modal-alert-OK">OK </button>
       </div>
     </div>
+  </main>
 
-<audio id="audio-bg" controls loop autoplay hidden>
+
+  <audio id="audio-bg" controls loop autoplay hidden>
     <source src="Assets/Sounds/game-bg-music.mp3" type="audio/mpeg">
   </audio>
 
-    <script src="script.js"></script>
-  </body>
+  <script src="script.js"></script>
+</body>
+
 </html>
