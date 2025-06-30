@@ -63,6 +63,7 @@ function startGame(numJugadores = 4) {
 }
 
 function initializeDeck() {
+  deck = [];
   for (let color of colors) {
     deck.push({ id: `${color[0]}-${0}`, color, type: "number", value: 0 });
     for (let i = 1; i <= 9; i++) {
@@ -227,11 +228,15 @@ async function playCard(playerIndex, card) {
       if (!currentPlayer.isHuman) {
         setTimeout(() => {
           currentPlayer.saidUNO = true;
-          showModalAlert(`${currentPlayer.name} ha dicho UNO!`);
+          showModalAlert(`${currentPlayer.name} ha dicho UNO!`, () => {
+            nextTurn();
+          });
         }, 200);
+        return;
       }
     }
 
+    // Si gana la ronda
     if (currentPlayer.cards.length === 0) {
       showCards();
       const points = countPoints();
@@ -240,7 +245,6 @@ async function playCard(playerIndex, card) {
       showModalAlert(
         `${currentPlayer.name} ha ganado la ronda! Su puntaje es ${points} `,
         () => {
-          // reiniciar la ronda, contar puntos
           okBtn.textContent = "OK";
           players[currentPlayerIndex].points = points;
           resetRound();
@@ -287,27 +291,51 @@ async function playCard(playerIndex, card) {
         let chosenColor;
         if (players[playerIndex].isHuman) {
           chosenColor = await chooseColor();
+          showModalAlert(`El nuevo color es: ${chosenColor}`, () => {
+            discardPile[discardPile.length - 1].color = chosenColor;
+            if (card.value === "draw4") {
+              let nextIndex = currentPlayerIndex + direction;
+              if (nextIndex >= players.length) nextIndex = 0;
+              if (nextIndex < 0) nextIndex = players.length - 1;
+              forceDraw(nextIndex, 4);
+              if (players.length === 2) {
+                nextTurn(true);
+                return;
+              } else {
+                currentPlayerIndex += direction;
+                if (currentPlayerIndex >= players.length)
+                  currentPlayerIndex = 0;
+                if (currentPlayerIndex < 0)
+                  currentPlayerIndex = players.length - 1;
+              }
+            }
+            setTimeout(() => nextTurn(), 800);
+          });
+          return;
         } else {
           chosenColor = getRandomColor();
-          showModalAlert(`El nuevo color es: ${chosenColor}`);
+          showModalAlert(`El nuevo color es: ${chosenColor}`, () => {
+            discardPile[discardPile.length - 1].color = chosenColor;
+            if (card.value === "draw4") {
+              let nextIndex = currentPlayerIndex + direction;
+              if (nextIndex >= players.length) nextIndex = 0;
+              if (nextIndex < 0) nextIndex = players.length - 1;
+              forceDraw(nextIndex, 4);
+              if (players.length === 2) {
+                nextTurn(true);
+                return;
+              } else {
+                currentPlayerIndex += direction;
+                if (currentPlayerIndex >= players.length)
+                  currentPlayerIndex = 0;
+                if (currentPlayerIndex < 0)
+                  currentPlayerIndex = players.length - 1;
+              }
+            }
+            setTimeout(() => nextTurn(), 800);
+          });
+          return;
         }
-        discardPile[discardPile.length - 1].color = chosenColor;
-        if (card.value === "draw4") {
-          let nextIndex = currentPlayerIndex + direction;
-          if (nextIndex >= players.length) nextIndex = 0;
-          if (nextIndex < 0) nextIndex = players.length - 1;
-          forceDraw(nextIndex, 4);
-          if (players.length === 2) {
-            nextTurn(true);
-            return;
-          } else {
-            currentPlayerIndex += direction;
-            if (currentPlayerIndex >= players.length) currentPlayerIndex = 0;
-            if (currentPlayerIndex < 0) currentPlayerIndex = players.length - 1;
-          }
-        }
-        setTimeout(() => nextTurn(), 800);
-        return;
       }
     }
     nextTurn();
@@ -367,8 +395,15 @@ function nextTurn(skipAdvance = false) {
   game.turn = currentPlayerIndex;
   const currentPlayer = players[currentPlayerIndex];
   if (currentPlayer.cards.length === 1 && !currentPlayer.saidUNO) {
-    showModalAlert(`¡${currentPlayer.name} NO ha dicho UNO! ¡Penalización!`);
-    forceDraw(currentPlayerIndex, 2);
+    showModalAlert(
+      `¡${currentPlayer.name} NO ha dicho UNO! ¡Penalización!`,
+      () => {
+        forceDraw(currentPlayerIndex, 2);
+        showCards();
+      }
+    );
+    currentPlayer.saidUNO = false;
+    return;
   }
   currentPlayer.saidUNO = false;
   showCards();
@@ -491,9 +526,8 @@ function showModalAlert(message, callback) {
   const msg = document.getElementById("modal-alert-message");
   const okBtn = document.getElementById("modal-alert-OK");
   msg.textContent = message;
-  modal.style.display = "flex"; // Muestra el modal
+  modal.style.display = "flex";
 
-  // Al hacer clic en OK, cierra el modal y ejecuta el callback si existe
   okBtn.onclick = () => {
     modal.style.display = "none";
     if (callback) callback();
@@ -501,7 +535,6 @@ function showModalAlert(message, callback) {
 }
 
 window.onload = function () {
-  // Si estás en interfazdejuego.html, usa el número de jugadores guardado
   if (document.getElementById("players-area")) {
     const numJugadores = parseInt(localStorage.getItem("numJugadores") || "2");
     startGame(numJugadores);
