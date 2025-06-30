@@ -229,6 +229,7 @@ async function playCard(playerIndex, card) {
         setTimeout(() => {
           currentPlayer.saidUNO = true;
           showModalAlert(`${currentPlayer.name} ha dicho UNO!`, () => {
+            playUnoSound();
             nextTurn();
           });
         }, 200);
@@ -238,6 +239,7 @@ async function playCard(playerIndex, card) {
 
     // Si gana la ronda
     if (currentPlayer.cards.length === 0) {
+      playWinSound();
       showCards();
       const points = countPoints();
       const okBtn = document.getElementById("modal-alert-OK");
@@ -260,6 +262,7 @@ async function playCard(playerIndex, card) {
     // efectos de cartas especiales
     if (card.type === "special") {
       if (card.value === "reverse") {
+        playSkipReverseSound();
         direction *= -1;
         game.direction = direction;
         if (players.length === 2) {
@@ -268,6 +271,7 @@ async function playCard(playerIndex, card) {
         }
       }
       if (card.value === "jump") {
+        playSkipReverseSound();
         if (players.length === 2) {
           setTimeout(() => nextTurn(true), 800);
           return;
@@ -278,6 +282,7 @@ async function playCard(playerIndex, card) {
         }
       }
       if (card.value === "draw2") {
+        playPlusSound();
         let nextIndex = currentPlayerIndex + direction;
         if (nextIndex >= players.length) nextIndex = 0;
         if (nextIndex < 0) nextIndex = players.length - 1;
@@ -297,6 +302,7 @@ async function playCard(playerIndex, card) {
           chosenColor = await chooseColor();
           showModalAlert(`El nuevo color es: ${chosenColor}`, () => {
             discardPile[discardPile.length - 1].color = chosenColor;
+            playChangeColorSound();
             if (card.value === "draw4") {
               let nextIndex = currentPlayerIndex + direction;
               if (nextIndex >= players.length) nextIndex = 0;
@@ -320,7 +326,9 @@ async function playCard(playerIndex, card) {
           chosenColor = getRandomColor();
           showModalAlert(`El nuevo color es: ${chosenColor}`, () => {
             discardPile[discardPile.length - 1].color = chosenColor;
+            playChangeColorSound();
             if (card.value === "draw4") {
+              playPlusSound();
               let nextIndex = currentPlayerIndex + direction;
               if (nextIndex >= players.length) nextIndex = 0;
               if (nextIndex < 0) nextIndex = players.length - 1;
@@ -345,6 +353,7 @@ async function playCard(playerIndex, card) {
     nextTurn();
   } else {
     showModalAlert("No puedes jugar esa carta!");
+    playErrorSound();
   }
 }
 
@@ -451,6 +460,7 @@ function checkUNO() {
   if (player.cards.length === 1 && !player.saidUNO) {
     player.saidUNO = true;
     showModalAlert("¡Has dicho UNO!");
+    playUnoSound(); 
   } else {
     forceDraw(0, 2);
     showModalAlert(
@@ -567,3 +577,61 @@ window.onload = function () {
     startGame(numJugadores);
   }
 };
+
+//Musica Cartas
+function playUnoSound() {
+  const audio = document.getElementById('UNO-sound');
+  if (audio) {
+    audio.currentTime = 0; // Reinicia el sonido si ya está sonando
+    audio.play();
+  }
+}
+
+function playPlusSound() {
+  const audio = document.getElementById('plus-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+function playSkipReverseSound() {
+  const audio = document.getElementById('skip-reverse-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+
+function playReverseSound() {
+  const audio = document.getElementById('reverse-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+function playChangeColorSound() {
+  const audio = document.getElementById('change-color-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+function playWinSound() {
+  const audio = document.getElementById('win-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+function playErrorSound() {
+  const audio = document.getElementById('error-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
