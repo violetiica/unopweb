@@ -367,6 +367,7 @@ function botTurn(botIndex) {
 
 function forceDraw(playerIndex, n) {
   for (let i = 0; i < n; i++) {
+    replenishDeck();
     if (deck.length === 0) break;
     const card = deck.shift();
     players[playerIndex].cards.push(card);
@@ -374,7 +375,17 @@ function forceDraw(playerIndex, n) {
   showCards();
 }
 
+function replenishDeck() {
+  if (deck.length === 0) {
+    const topCard = discardPile.pop(); // conserva la carta visible
+    deck = discardPile;
+    discardPile = [topCard];
+    shuffleDeck();
+  }
+}
+
 function drawCard(playerIndex) {
+  replenishDeck();
   const card = deck.shift();
   players[playerIndex].cards.push(card);
   showCards();
