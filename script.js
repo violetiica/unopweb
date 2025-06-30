@@ -539,3 +539,61 @@ window.onload = function () {
     startGame(numJugadores);
   }
 };
+
+//Musica Cartas
+function playUnoSound() {
+  const audio = document.getElementById('UNO-sound');
+  if (audio) {
+    audio.currentTime = 0; // Reinicia el sonido si ya está sonando
+    audio.play();
+  }
+}
+
+function playPlusSound() {
+  const audio = document.getElementById('plus-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+function playSkipReverseSound() {
+  const audio = document.getElementById('skip-reverse-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+
+function playReverseSound() {
+  const audio = document.getElementById('reverse-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+function playChangeColorSound() {
+  const audio = document.getElementById('change-color-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+function playWinSound() {
+  const audio = document.getElementById('win-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+
+function playErrorSound() {
+  const audio = document.getElementById('error-sound');
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
