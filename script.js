@@ -46,7 +46,7 @@ const game = {
   roundWinner: null,
 };
 
-function startGame(numJugadores=4) {
+function startGame(numJugadores = 4) {
   initializeDeck();
   createPlayers(numJugadores);
   dealCards();
@@ -63,6 +63,7 @@ function startGame(numJugadores=4) {
 }
 
 function initializeDeck() {
+  deck = [];
   for (let color of colors) {
     deck.push({ id: `${color[0]}-${0}`, color, type: "number", value: 0 });
     for (let i = 1; i <= 9; i++) {
@@ -228,14 +229,13 @@ async function playCard(playerIndex, card) {
         setTimeout(() => {
           currentPlayer.saidUNO = true;
           showModalAlert(`${currentPlayer.name} ha dicho UNO!`);
-          playUnoSound();
         }, 200);
+        return;
       }
     } else if (currentPlayer.cards.length === 0) {
       showModalAlert(`${currentPlayer.name} ha ganado la ronda!`);
-      playWinSound();
       game.roundWinner = currentPlayer;
-      //finalizar la ronda y contar puntos.   
+      //finalizar la ronda y contar puntos.
     }
 
     // efectos de cartas especiales
@@ -280,13 +280,33 @@ async function playCard(playerIndex, card) {
         let chosenColor;
         if (players[playerIndex].isHuman) {
           chosenColor = await chooseColor();
+          showModalAlert(`El nuevo color es: ${chosenColor}`, () => {
+            discardPile[discardPile.length - 1].color = chosenColor;
+            if (card.value === "draw4") {
+              let nextIndex = currentPlayerIndex + direction;
+              if (nextIndex >= players.length) nextIndex = 0;
+              if (nextIndex < 0) nextIndex = players.length - 1;
+              forceDraw(nextIndex, 4);
+              if (players.length === 2) {
+                nextTurn(true);
+                return;
+              } else {
+                currentPlayerIndex += direction;
+                if (currentPlayerIndex >= players.length)
+                  currentPlayerIndex = 0;
+                if (currentPlayerIndex < 0)
+                  currentPlayerIndex = players.length - 1;
+              }
+            }
+            setTimeout(() => nextTurn(), 800);
+          });
+          return;
         } else {
           chosenColor = getRandomColor();
           showModalAlert(`El nuevo color es: ${chosenColor}`);
         }
         discardPile[discardPile.length - 1].color = chosenColor;
         if (card.value === "draw4") {
-          playPlusSound();
           let nextIndex = currentPlayerIndex + direction;
           if (nextIndex >= players.length) nextIndex = 0;
           if (nextIndex < 0) nextIndex = players.length - 1;
@@ -334,6 +354,7 @@ function botTurn(botIndex) {
 
 function forceDraw(playerIndex, n) {
   for (let i = 0; i < n; i++) {
+    replenishDeck();
     if (deck.length === 0) break;
     const card = deck.shift();
     players[playerIndex].cards.push(card);
@@ -341,7 +362,17 @@ function forceDraw(playerIndex, n) {
   showCards();
 }
 
+function replenishDeck() {
+  if (deck.length === 0) {
+    const topCard = discardPile.pop();
+    deck = discardPile;
+    discardPile = [topCard];
+    shuffleDeck();
+  }
+}
+
 function drawCard(playerIndex) {
+  replenishDeck();
   const card = deck.shift();
   players[playerIndex].cards.push(card);
   showCards();
@@ -357,12 +388,20 @@ function nextTurn(skipAdvance = false) {
     currentPlayerIndex += direction;
     if (currentPlayerIndex >= players.length) currentPlayerIndex = 0;
     if (currentPlayerIndex < 0) currentPlayerIndex = players.length - 1;
+    showCards();
   }
   game.turn = currentPlayerIndex;
   const currentPlayer = players[currentPlayerIndex];
   if (currentPlayer.cards.length === 1 && !currentPlayer.saidUNO) {
-    showModalAlert(`¡${currentPlayer.name} NO ha dicho UNO! ¡Penalización!`);
-    forceDraw(currentPlayerIndex, 2);
+    showModalAlert(
+      `¡${currentPlayer.name} NO ha dicho UNO! ¡Penalización!`,
+      () => {
+        forceDraw(currentPlayerIndex, 2);
+        showCards();
+      }
+    );
+    currentPlayer.saidUNO = false;
+    return;
   }
   currentPlayer.saidUNO = false;
   showCards();
@@ -398,13 +437,52 @@ function checkUNO() {
     playUnoSound();
   } else {
     forceDraw(0, 2);
-    showModalAlert("¡Penalización! Solo puedes decir UNO cuando te queda una carta.");
+    showModalAlert(
+      "¡Penalización! Solo puedes decir UNO cuando te queda una carta."
+    );
   }
 }
 
-function countPoints() {}
+function countPoints() {
+  let points = 0;
+  for (let player of players) {
+    for (let card of player.cards) {
+      if (card.type === "number") {
+        points += card.value;
+      } else if (card.type === "special") {
+        if (
+          card.value === "draw2" ||
+          card.value === "reverse" ||
+          card.value === "jump"
+        ) {
+          points += 20;
+        }
+        if (card.value === "changeColor" || card.value === "draw4") {
+          points += 50;
+        }
+      }
+    }
+  }
+  return points;
+}
 
-function resetRound() {}
+function resetRound() {
+  for (let player of players) {
+    player.cards = [];
+    player.saidUNO = false;
+  }
+  deck = [];
+  discardPile = [];
+  initializeDeck();
+  dealCards();
+  showCards();
+  currentPlayerIndex = 0;
+  game.turn = currentPlayerIndex;
+  game.direction = 1;
+  game.currentCard = discardPile[discardPile.length - 1];
+  game.waitingForColor = false;
+  game.roundWinner = null;
+}
 
 document.querySelector(".uno-button").addEventListener("click", checkUNO);
 
@@ -413,7 +491,9 @@ function openModal() {
 }
 
 function closeModal() {
-  document.querySelectorAll('.modal').forEach(modal => modal.style.display = 'none');
+  document
+    .querySelectorAll(".modal")
+    .forEach((modal) => (modal.style.display = "none"));
 }
 
 // cerrar el modal al hacer clic fuera del contenido
@@ -425,13 +505,13 @@ window.onclick = function (event) {
 };
 
 function openModalJugadores() {
-  document.getElementById('modal-jugadores').style.display = 'flex';
+  document.getElementById("modal-jugadores").style.display = "flex";
 }
 
 function goToGame() {
-  const num= document.getElementById('num-jugadores').value;
-  localStorage.setItem('numJugadores', num);
-  window.location.href = 'interfazdejuego.html';
+  const num = document.getElementById("num-jugadores").value;
+  localStorage.setItem("numJugadores", num);
+  window.location.href = "interfazdejuego.html";
 }
 
 //MUSICA
@@ -441,81 +521,21 @@ function PlayAudio() {
 
 //Modales Alerta
 function showModalAlert(message, callback) {
-  const modal = document.getElementById('modal-alert');
-  const msg = document.getElementById('modal-alert-message');
-  const okBtn = document.getElementById('modal-alert-OK');
+  const modal = document.getElementById("modal-alert");
+  const msg = document.getElementById("modal-alert-message");
+  const okBtn = document.getElementById("modal-alert-OK");
   msg.textContent = message;
-  modal.style.display = 'flex'; // Muestra el modal
+  modal.style.display = "flex";
 
-  // Al hacer clic en OK, cierra el modal y ejecuta el callback si existe
   okBtn.onclick = () => {
-    modal.style.display = 'none';
+    modal.style.display = "none";
     if (callback) callback();
   };
 }
 
-window.onload = function() {
-  // Si estás en interfazdejuego.html, usa el número de jugadores guardado
+window.onload = function () {
   if (document.getElementById("players-area")) {
-    const numJugadores = parseInt(localStorage.getItem('numJugadores') || '2');
+    const numJugadores = parseInt(localStorage.getItem("numJugadores") || "2");
     startGame(numJugadores);
   }
 };
-
-//Musica Cartas
-function playUnoSound() {
-  const audio = document.getElementById('UNO-sound');
-  if (audio) {
-    audio.currentTime = 0; // Reinicia el sonido si ya está sonando
-    audio.play();
-  }
-}
-
-function playPlusSound() {
-  const audio = document.getElementById('plus-sound');
-  if (audio) {
-    audio.currentTime = 0;
-    audio.play();
-  }
-}
-
-function playSkipReverseSound() {
-  const audio = document.getElementById('skip-reverse-sound');
-  if (audio) {
-    audio.currentTime = 0;
-    audio.play();
-  }
-}
-
-
-function playReverseSound() {
-  const audio = document.getElementById('reverse-sound');
-  if (audio) {
-    audio.currentTime = 0;
-    audio.play();
-  }
-}
-
-function playChangeColorSound() {
-  const audio = document.getElementById('change-color-sound');
-  if (audio) {
-    audio.currentTime = 0;
-    audio.play();
-  }
-}
-
-function playWinSound() {
-  const audio = document.getElementById('win-sound');
-  if (audio) {
-    audio.currentTime = 0;
-    audio.play();
-  }
-}
-
-function playErrorSound() {
-  const audio = document.getElementById('error-sound');
-  if (audio) {
-    audio.currentTime = 0;
-    audio.play();
-  }
-}
